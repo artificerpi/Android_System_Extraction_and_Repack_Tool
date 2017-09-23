@@ -16,18 +16,29 @@ Now you can push the `system.img` to Android by adb: `adb push system.img /sdcar
 In Android, install [connectBot](https://github.com/connectbot/connectbot) and open a local terminal with root, run `dd if=/sdcard/system.img of=<GET-THIS_PATH_FROM_updater-script>`
 Wait for this command to finish, then your phone will have updated by you manually. 
 
-## build.prop
+### Use fastboot(you may need to unlock oem first)
+**Connect your phone with debug mode**
+``` sh
+# reboot your to bootloader
+adb reboot-bootloader
+fastboot flash system system.img
+```
+
+
+## About customization
+### build.prop
 **Examples**
-### Enable soft keys navationbar
+#### Enable soft keys navationbar
 - *4.0+* required
 
 add line `qemu.hw.mainkeys=0`
 
-## Remove app
-### priv-app vs app
+### Remove app
+#### priv-app vs app
 The essential apps like dialer, message, camera should be under priv-app folder 
 
-## Modify files under `/system` in Android (root required)
+### Customize in your phone directly
+**Modify files under `/system` in Android (root required)**
 ``` sh
 mount -o rw,remount /dev/block/mtdblock1 /system
 // Now you can make some modification under /system directory
