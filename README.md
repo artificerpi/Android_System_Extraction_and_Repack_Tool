@@ -1,15 +1,25 @@
 # Guide to customize your own Android
+
 ## Unpack(sdat2img)
-``` sh
-$TOOLS_DIR/sdat2img.py $DATA_IN_DIR/system.transfer.list $DATA_IN_DIR/system.new.dat $OUTPUT_DIR/system.img
+
+* First Extract image files into `./data-in` folder  (`system.new.dat`, `system.patch.dat`, `system.transfer.list`)
+
+For Android 8.1, you need to decompress the file `system.new.dat.br` into `system.new.dat` first.
+
+```bash
+# For Ubuntu
+sudo apt install brotli
+
+# in data-in folder
+brotli -d  system.new.dat.br -f
 ```
-It will generate a file `system.img`. Now run following command to mount this image to a directory (`./rom_system`).
-``` sh
-sudo mount -t ext4 -o loop $OUTPUT_DIR/system.img rom_system/
-```
-Note that the owner of files in rom_system direcotry is `root`, don't just copy these files.
+
+* Now run `bash unpack.sh` to unpack rom files.
+
+  Note that the owner of files in rom_system direcotry is `root`, don't just copy files into this folder.
 
 ## Update the `/system`
+
 When you have done editing files in `rom_system`, unmount it by `sudo umount rom_system`.
 Now you can push the `system.img` to Android by adb: `adb push system.img /sdcard/system.img`
 
